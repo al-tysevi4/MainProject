@@ -17,18 +17,44 @@ public class ContactCreationTests {
     wd = new FirefoxDriver();
     //baseUrl = "https://www.google.com/";
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd.get("http://localhost/addressbook/index.php");
+    login();
   }
 
-  @Test
-  public void testContactCreation() throws Exception {
-    wd.get("http://localhost/addressbook/index.php");
+  private void login() {
     wd.findElement(By.name("user")).clear();
     wd.findElement(By.name("user")).sendKeys("admin");
     wd.findElement(By.name("pass")).click();
     wd.findElement(By.name("pass")).clear();
     wd.findElement(By.name("pass")).sendKeys("secret");
     wd.findElement(By.id("LoginForm")).submit();
-    wd.findElement(By.linkText("add new")).click();
+  }
+
+  @Test
+  public void testContactCreation() throws Exception {
+//    wd.get("http://localhost/addressbook/index.php");
+//    wd.findElement(By.name("user")).clear();
+//    wd.findElement(By.name("user")).sendKeys("admin");
+//    wd.findElement(By.name("pass")).click();
+//    wd.findElement(By.name("pass")).clear();
+//    wd.findElement(By.name("pass")).sendKeys("secret");
+//    wd.findElement(By.id("LoginForm")).submit();
+    gotoAddNewPage();
+    fillContactForm();
+    submitContactCreation();
+    homeAndLogout();
+  }
+
+  private void homeAndLogout() {
+    wd.findElement(By.linkText("home")).click();
+    wd.findElement(By.linkText("Logout")).click();
+  }
+
+  private void submitContactCreation() {
+    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+  }
+
+  private void fillContactForm() {
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).clear();
     wd.findElement(By.name("firstname")).sendKeys("aleksandr");
@@ -54,9 +80,10 @@ public class ContactCreationTests {
     wd.findElement(By.name("byear")).click();
     wd.findElement(By.name("byear")).clear();
     wd.findElement(By.name("byear")).sendKeys("1970");
-    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
-    wd.findElement(By.linkText("home")).click();
-    wd.findElement(By.linkText("Logout")).click();
+  }
+
+  private void gotoAddNewPage() {
+    wd.findElement(By.linkText("add new")).click();
   }
 
   @AfterMethod(alwaysRun = true)
