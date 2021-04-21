@@ -1,7 +1,8 @@
 package addressbook.tests;
 
 import addressbook.model.GroupData;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
+//import org.junit.jupiter.api.Test;
 
 public class GroupModificationTest extends TestBase{
 
