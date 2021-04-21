@@ -1,4 +1,4 @@
-package com.example.tests;
+package addressbook.tests;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +24,12 @@ public class ContactAddToTest1 {
   @Test
   public void testContactAddToTest1() throws Exception {
     driver.get("http://localhost/addressbook/index.php");
+    driver.findElement(By.name("user")).clear();
+    driver.findElement(By.name("user")).sendKeys("admin");
+    driver.findElement(By.name("pass")).click();
+    driver.findElement(By.name("pass")).clear();
+    driver.findElement(By.name("pass")).sendKeys("secret");
+    driver.findElement(By.id("LoginForm")).submit();
     new Select(driver.findElement(By.name("to_group"))).selectByVisibleText("test1");
     driver.findElement(By.xpath("(//option[@value='8'])[2]")).click();
   }
