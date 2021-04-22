@@ -3,6 +3,8 @@ package addressbook.tests;
 import addressbook.appmanager.ApplicationManager;
 import addressbook.model.ContactData1;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -94,5 +96,35 @@ public class TestBase {
   //    if (!"".equals(verificationErrorString)) {
   //      fail(verificationErrorString);
   //    }
+    }
+
+    protected void extracted() {
+      wd.switchTo().alert().accept();
+    }
+
+    protected void deleteSelectedGroups() {
+      wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    }
+
+    protected void selectAllContacts() {
+      wd.findElement(By.id("MassCB")).click();
+    }
+
+    private boolean isElementPresent(By by) {
+      try {
+        wd.findElement(by);
+        return true;
+      } catch (NoSuchElementException e) {
+        return false;
+      }
+    }
+
+    private boolean isAlertPresent() {
+      try {
+        wd.switchTo().alert();
+        return true;
+      } catch (NoAlertPresentException e) {
+        return false;
+      }
     }
 }

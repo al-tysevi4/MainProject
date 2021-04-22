@@ -10,14 +10,14 @@ import org.openqa.selenium.support.ui.Select;
 
 public class ContactAddToTest1 {
   private WebDriver driver;
-  private String baseUrl;
-  private boolean acceptNextAlert = true;
-  private StringBuffer verificationErrors = new StringBuffer();
+//  private String baseUrl;
+//  private boolean acceptNextAlert = true;
+//  private StringBuffer verificationErrors = new StringBuffer();
 
   @BeforeClass(alwaysRun = true)
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
-    baseUrl = "https://www.google.com/";
+    //baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
@@ -37,10 +37,10 @@ public class ContactAddToTest1 {
   @AfterClass(alwaysRun = true)
   public void tearDown() throws Exception {
     driver.quit();
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
+//    String verificationErrorString = verificationErrors.toString();
+//    if (!"".equals(verificationErrorString)) {
+//      fail(verificationErrorString);
+//    }
   }
 
   private boolean isElementPresent(By by) {
@@ -61,18 +61,18 @@ public class ContactAddToTest1 {
     }
   }
 
-  private String closeAlertAndGetItsText() {
-    try {
-      Alert alert = driver.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
-    }
-  }
+//  private String closeAlertAndGetItsText() {
+//    try {
+//      Alert alert = driver.switchTo().alert();
+//      String alertText = alert.getText();
+//      if (acceptNextAlert) {
+//        alert.accept();
+//      } else {
+//        alert.dismiss();
+//      }
+//      return alertText;
+//    } finally {
+//      acceptNextAlert = true;
+//    }
+//  }
 }
