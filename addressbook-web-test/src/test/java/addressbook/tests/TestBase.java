@@ -8,7 +8,6 @@ public class TestBase {
 
 
     protected final ApplicationManager app = new ApplicationManager();
-    //private final ApplicationManager app = new ApplicationManager();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
