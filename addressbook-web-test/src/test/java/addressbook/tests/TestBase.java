@@ -3,8 +3,6 @@ package addressbook.tests;
 import addressbook.appmanager.ApplicationManager;
 import addressbook.model.ContactData1;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -16,19 +14,12 @@ import java.util.concurrent.TimeUnit;
 public class TestBase {
 
     protected final ApplicationManager app = new ApplicationManager();
-    //protected WebDriver wd;
      WebDriver wd;
-
-//    @BeforeMethod(alwaysRun = true)
-//    public void setUp() throws Exception {
-//        app.init();
-//    }
 
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
       wd = new FirefoxDriver();
-      //baseUrl = "https://www.google.com/";
       wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
       wd.get("http://localhost/addressbook/index.php");
       login("admin", "secret");
@@ -69,8 +60,6 @@ public class TestBase {
       wd.findElement(By.name("email")).clear();
       wd.findElement(By.name("email")).sendKeys(contactData1.getEmail());
       wd.findElement(By.name("bday")).click();
-  //    new Select(wd.findElement(By.name("bday"))).selectByVisibleText("11");
-  //    wd.findElement(By.xpath("//option[@value='11']")).click();
       new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData1.getBday());
       wd.findElement(By.xpath("//option[@value='20']")).click();
       new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData1.getBmonth());
@@ -84,23 +73,8 @@ public class TestBase {
       wd.findElement(By.linkText("add new")).click();
     }
 
-//    @AfterMethod(alwaysRun = true)
-//    public void tearDown() throws Exception {
-//        app.stop();
-//    }
-
-    protected void loginForAddToGroup() {
-      wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-      wd.get("http://localhost/addressbook/index.php");
-      wd.findElement(By.name("user")).clear();
-      wd.findElement(By.name("user")).sendKeys("admin");
-      wd.findElement(By.name("pass")).click();
-      wd.findElement(By.name("pass")).clear();
-      wd.findElement(By.name("pass")).sendKeys("secret");
-      wd.findElement(By.id("LoginForm")).submit();
-    }
-
-//    protected void loginForSendEmail() {
+//    protected void loginForAddToGroup() {
+//      wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 //      wd.get("http://localhost/addressbook/index.php");
 //      wd.findElement(By.name("user")).clear();
 //      wd.findElement(By.name("user")).sendKeys("admin");
@@ -109,16 +83,16 @@ public class TestBase {
 //      wd.findElement(By.name("pass")).sendKeys("secret");
 //      wd.findElement(By.id("LoginForm")).submit();
 //    }
-
-    protected void loginForEmail() {
-      wd.get("http://localhost/addressbook/index.php");
-      wd.findElement(By.name("user")).clear();
-      wd.findElement(By.name("user")).sendKeys("admin");
-      wd.findElement(By.name("pass")).click();
-      wd.findElement(By.name("pass")).clear();
-      wd.findElement(By.name("pass")).sendKeys("secret");
-      wd.findElement(By.id("LoginForm")).submit();
-    }
+//
+//    protected void loginForEmail() {
+//      wd.get("http://localhost/addressbook/index.php");
+//      wd.findElement(By.name("user")).clear();
+//      wd.findElement(By.name("user")).sendKeys("admin");
+//      wd.findElement(By.name("pass")).click();
+//      wd.findElement(By.name("pass")).clear();
+//      wd.findElement(By.name("pass")).sendKeys("secret");
+//      wd.findElement(By.id("LoginForm")).submit();
+//    }
 
     protected void sendAnEmail() {
       wd.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
@@ -131,10 +105,6 @@ public class TestBase {
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
       wd.quit();
-  //    String verificationErrorString = verificationErrors.toString();
-  //    if (!"".equals(verificationErrorString)) {
-  //      fail(verificationErrorString);
-  //    }
     }
 
     protected void deletion() {
@@ -149,24 +119,6 @@ public class TestBase {
       wd.findElement(By.id("MassCB")).click();
     }
 
-//    private boolean isElementPresent(By by) {
-//      try {
-//        wd.findElement(by);
-//        return true;
-//      } catch (NoSuchElementException e) {
-//        return false;
-//      }
-//    }
-//
-//    private boolean isAlertPresent() {
-//      try {
-//        wd.switchTo().alert();
-//        return true;
-//      } catch (NoAlertPresentException e) {
-//        return false;
-//      }
-//    }
-
     protected void addToGroup() {
         wd.findElement(By.xpath("(//option[@value='8'])[2]")).click();
     }
@@ -174,12 +126,4 @@ public class TestBase {
     protected void clickGroup() {
         new Select(wd.findElement(By.name("to_group"))).selectByVisibleText("test1");
     }
-
-//    protected void sendEmail() {
-//      wd.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
-//    }
-//
-//    protected void checkContact() {
-//      wd.findElement(By.id("20")).click();
-//    }
 }
