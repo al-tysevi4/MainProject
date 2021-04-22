@@ -100,7 +100,17 @@ public class TestBase {
       wd.findElement(By.id("LoginForm")).submit();
     }
 
-    protected void loginForSendEmail() {
+//    protected void loginForSendEmail() {
+//      wd.get("http://localhost/addressbook/index.php");
+//      wd.findElement(By.name("user")).clear();
+//      wd.findElement(By.name("user")).sendKeys("admin");
+//      wd.findElement(By.name("pass")).click();
+//      wd.findElement(By.name("pass")).clear();
+//      wd.findElement(By.name("pass")).sendKeys("secret");
+//      wd.findElement(By.id("LoginForm")).submit();
+//    }
+
+    protected void loginForEmail() {
       wd.get("http://localhost/addressbook/index.php");
       wd.findElement(By.name("user")).clear();
       wd.findElement(By.name("user")).sendKeys("admin");
@@ -108,6 +118,14 @@ public class TestBase {
       wd.findElement(By.name("pass")).clear();
       wd.findElement(By.name("pass")).sendKeys("secret");
       wd.findElement(By.id("LoginForm")).submit();
+    }
+
+    protected void sendAnEmail() {
+      wd.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
+    }
+
+    protected void checkTheContact() {
+      wd.findElement(By.id("25")).click();
     }
 
     @AfterMethod(alwaysRun = true)
@@ -119,7 +137,7 @@ public class TestBase {
   //    }
     }
 
-    protected void extracted() {
+    protected void deletion() {
       wd.switchTo().alert().accept();
     }
 
@@ -131,23 +149,23 @@ public class TestBase {
       wd.findElement(By.id("MassCB")).click();
     }
 
-    private boolean isElementPresent(By by) {
-      try {
-        wd.findElement(by);
-        return true;
-      } catch (NoSuchElementException e) {
-        return false;
-      }
-    }
-
-    private boolean isAlertPresent() {
-      try {
-        wd.switchTo().alert();
-        return true;
-      } catch (NoAlertPresentException e) {
-        return false;
-      }
-    }
+//    private boolean isElementPresent(By by) {
+//      try {
+//        wd.findElement(by);
+//        return true;
+//      } catch (NoSuchElementException e) {
+//        return false;
+//      }
+//    }
+//
+//    private boolean isAlertPresent() {
+//      try {
+//        wd.switchTo().alert();
+//        return true;
+//      } catch (NoAlertPresentException e) {
+//        return false;
+//      }
+//    }
 
     protected void addToGroup() {
         wd.findElement(By.xpath("(//option[@value='8'])[2]")).click();
@@ -157,11 +175,11 @@ public class TestBase {
         new Select(wd.findElement(By.name("to_group"))).selectByVisibleText("test1");
     }
 
-    protected void sendEmail() {
-      wd.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
-    }
-
-    protected void checkContact() {
-      wd.findElement(By.id("20")).click();
-    }
+//    protected void sendEmail() {
+//      wd.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
+//    }
+//
+//    protected void checkContact() {
+//      wd.findElement(By.id("20")).click();
+//    }
 }
