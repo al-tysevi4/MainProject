@@ -100,6 +100,16 @@ public class TestBase {
       wd.findElement(By.id("LoginForm")).submit();
     }
 
+    protected void loginForSendEmail() {
+      wd.get("http://localhost/addressbook/index.php");
+      wd.findElement(By.name("user")).clear();
+      wd.findElement(By.name("user")).sendKeys("admin");
+      wd.findElement(By.name("pass")).click();
+      wd.findElement(By.name("pass")).clear();
+      wd.findElement(By.name("pass")).sendKeys("secret");
+      wd.findElement(By.id("LoginForm")).submit();
+    }
+
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
       wd.quit();
@@ -137,5 +147,21 @@ public class TestBase {
       } catch (NoAlertPresentException e) {
         return false;
       }
+    }
+
+    protected void addToGroup() {
+        wd.findElement(By.xpath("(//option[@value='8'])[2]")).click();
+    }
+
+    protected void clickGroup() {
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText("test1");
+    }
+
+    protected void sendEmail() {
+      wd.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
+    }
+
+    protected void checkContact() {
+      wd.findElement(By.id("20")).click();
     }
 }
