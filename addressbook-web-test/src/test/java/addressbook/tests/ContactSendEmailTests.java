@@ -14,7 +14,7 @@ public class ContactSendEmailTests {
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
@@ -22,7 +22,7 @@ public class ContactSendEmailTests {
   }
 
   @Test
-  public void testContactSendEmailTests() throws Exception {
+  public void testContactSendEmail() throws Exception {
     driver.get("http://localhost/addressbook/index.php");
     driver.findElement(By.name("user")).clear();
     driver.findElement(By.name("user")).sendKeys("admin");
@@ -34,7 +34,7 @@ public class ContactSendEmailTests {
     driver.findElement(By.xpath("//input[@value='Send e-Mail']")).click();
   }
 
-  @AfterClass(alwaysRun = true)
+  @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     driver.quit();
         String verificationErrorString = verificationErrors.toString();
@@ -61,18 +61,18 @@ public class ContactSendEmailTests {
     }
   }
 
-//  private String closeAlertAndGetItsText() {
-//    try {
-//      Alert alert = driver.switchTo().alert();
-//      String alertText = alert.getText();
-//      if (acceptNextAlert) {
-//        alert.accept();
-//      } else {
-//        alert.dismiss();
-//      }
-//      return alertText;
-//    } finally {
-//      acceptNextAlert = true;
-//    }
-//  }
+  private String closeAlertAndGetItsText() {
+    try {
+      Alert alert = driver.switchTo().alert();
+      String alertText = alert.getText();
+      if (acceptNextAlert) {
+        alert.accept();
+      } else {
+        alert.dismiss();
+      }
+      return alertText;
+    } finally {
+      acceptNextAlert = true;
+    }
+  }
 }

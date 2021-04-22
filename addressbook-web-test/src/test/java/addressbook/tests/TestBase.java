@@ -89,6 +89,17 @@ public class TestBase {
 //        app.stop();
 //    }
 
+    protected void loginForAddToGroup() {
+      wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+      wd.get("http://localhost/addressbook/index.php");
+      wd.findElement(By.name("user")).clear();
+      wd.findElement(By.name("user")).sendKeys("admin");
+      wd.findElement(By.name("pass")).click();
+      wd.findElement(By.name("pass")).clear();
+      wd.findElement(By.name("pass")).sendKeys("secret");
+      wd.findElement(By.id("LoginForm")).submit();
+    }
+
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
       wd.quit();
