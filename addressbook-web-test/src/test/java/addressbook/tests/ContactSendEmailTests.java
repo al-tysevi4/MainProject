@@ -9,7 +9,7 @@ public class ContactSendEmailTests extends TestBase{
 
   @Test
   public void testContactSendEmail() throws Exception {
-    checkTheContact();
-    sendAnEmail();
+    app.checkTheContact();
+    app.sendAnEmail();
   }
 }
