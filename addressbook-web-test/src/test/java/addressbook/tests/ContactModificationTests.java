@@ -1,10 +1,8 @@
 package addressbook.tests;
 
 
-import java.util.concurrent.TimeUnit;
+import addressbook.model.ContactData1;
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 public class ContactModificationTests extends  TestBase{
@@ -12,10 +10,10 @@ public class ContactModificationTests extends  TestBase{
 
   @Test
   public void testContactModification() throws Exception {
-    checkContact();
-    pressEdit();
-    fillLastname(new ContactData1("tysevich"));
-    pressUpdate();
-    gotoHomePage();
+    app.checkContact();
+    app.getContactHelper().pressEdit();
+    app.getContactHelper().fillLastname(new ContactData1("tysevich"));
+    app.getContactHelper().pressUpdate();
+    app.getNavigationHelper().gotoHomePage();
   }
 }
