@@ -8,27 +8,39 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 public class ContactDeletionTests {
-  private WebDriver wd;
+  WebDriver wd;
 
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    login("admin", "secret");
+  }
+
+  private void login(String username, String password) {
     wd.get("http://localhost/addressbook/index.php");
     wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys("admin");
+    wd.findElement(By.name("user")).sendKeys(username);
     wd.findElement(By.name("pass")).click();
     wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys("secret");
+    wd.findElement(By.name("pass")).sendKeys(password);
     wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
 
   @Test
   public void testContactDeletion() throws Exception {
-    wd.findElement(By.name("selected[]")).click();
-    wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    checkContact();
+    deleteContact();
 
+  }
+
+  private void deleteContact() {
+    wd.findElement(By.xpath("//input[@value='Delete']")).click();
+  }
+
+  private void checkContact() {
+    wd.findElement(By.name("selected[]")).click();
   }
 
   @AfterMethod(alwaysRun = true)
