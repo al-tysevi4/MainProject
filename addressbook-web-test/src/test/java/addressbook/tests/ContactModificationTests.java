@@ -13,7 +13,7 @@ public class ContactModificationTests extends  TestBase{
   public void testContactModification() throws Exception {
     app.checkContact();
     app.getContactHelper().pressEdit();
-    app.getContactHelper().fillLastname(new ContactData1("tysevich", null));
+    app.getContactHelper().fillLastname(new ContactData1("tysevich", null), false);
     app.getContactHelper().pressUpdate();
     app.getNavigationHelper().gotoHomePage();
   }
