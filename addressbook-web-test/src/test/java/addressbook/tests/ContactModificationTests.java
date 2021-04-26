@@ -1,6 +1,7 @@
 package addressbook.tests;
 
 
+import addressbook.model.ContactData;
 import addressbook.model.ContactData1;
 import org.testng.annotations.*;
 
@@ -12,7 +13,7 @@ public class ContactModificationTests extends  TestBase{
   public void testContactModification() throws Exception {
     app.checkContact();
     app.getContactHelper().pressEdit();
-    app.getContactHelper().fillLastname(new ContactData1("tysevich"));
+    app.getContactHelper().fillLastname(new ContactData1("tysevich", null));
     app.getContactHelper().pressUpdate();
     app.getNavigationHelper().gotoHomePage();
   }
