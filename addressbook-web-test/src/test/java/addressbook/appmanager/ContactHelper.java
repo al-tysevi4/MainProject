@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void pressUpdate() {
-      wd.findElement(By.name("update")).click();
+      click(By.name("update"));
     }
 
     public void fillLastname(ContactData1 contactData1, boolean creation) {
@@ -35,19 +35,18 @@ public class ContactHelper extends HelperBase {
     }
 
     public void pressEdit() {
-      wd.findElement(By.xpath("//img[@alt='Edit']")).click();
+      click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void deleteContact() {
-        wd.findElement(By.xpath("//input[@value='Delete']")).click();
+        click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
     }
     public void checkContact() {
-        wd.findElement(By.name("selected[]"));
+        click(By.name("selected[]"));
     }
 
     public void submitContactCreation() {
-
-        wd.findElement(By.name("submit"));
+       click(By.name("submit"));
     }
 }

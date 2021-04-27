@@ -16,16 +16,23 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
-    //private String browser;
+    private String browser;
 
 
 
-    //public ApplicationManager(String browser) {
-        //ApplicationManager.this.browser = browser;
-    //}
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+    }
 
     public void init() {
-        wd = new FirefoxDriver();
+        //String browser = BrowserType.FIREFOX;
+        if (browser == BrowserType.FIREFOX) {
+            wd = new FirefoxDriver();
+        } else if (browser == BrowserType.CHROME) {
+            wd = new ChromeDriver();
+        } else if (browser == BrowserType.SAFARI) {
+            wd = new SafariDriver();
+        }
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
         contactHelper = new ContactHelper(wd);
