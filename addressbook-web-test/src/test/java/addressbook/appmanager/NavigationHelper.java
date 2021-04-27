@@ -29,9 +29,9 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void returnToHomePage() {
-//        if (! isElementPresent(By.id("maintable"))) {
-//          return;
-//        }
+        if (! isElementPresent(By.id("maintable"))) {
+          return;
+        }
         click(By.linkText("home page"));
     }
 
