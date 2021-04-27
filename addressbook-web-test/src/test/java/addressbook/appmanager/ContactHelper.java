@@ -15,6 +15,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void fillContactForm(ContactData contactData, boolean creation) {
+        //type(By.name("firstname"), ContactData.getFirstname);
       wd.findElement(By.name("firstname")).click();
       wd.findElement(By.name("firstname")).clear();
       wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
@@ -24,9 +25,7 @@ public class ContactHelper extends HelperBase {
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
-      if(isElementPresent(By.name("new_group"))) {
 
-      }
 
     }
 
