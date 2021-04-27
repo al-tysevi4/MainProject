@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeMethod;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
+    protected final ApplicationManager app = new ApplicationManager();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
@@ -18,9 +18,5 @@ public class TestBase {
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
         app.stop();
-    }
-
-    public ApplicationManager getApp() {
-        return app;
     }
 }

@@ -15,6 +15,6 @@ public class ContactModificationTests extends  TestBase{
     app.getContactHelper().pressEdit();
     app.getContactHelper().fillLastname(new ContactData1("tysevich", null), false);
     app.getContactHelper().pressUpdate();
-    app.getNavigationHelper().gotoHomePage();
+    app.getNavigationHelper().returnToHomePage();
   }
 }
