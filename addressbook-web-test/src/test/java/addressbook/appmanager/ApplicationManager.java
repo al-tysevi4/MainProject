@@ -12,65 +12,41 @@ import org.openqa.selenium.safari.SafariDriver;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-    WebDriver wd;
+    //WebDriver wd;
     private SessionHelper sessionHelper;
     private ContactHelper contactHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
     private String browser;
 
+
+
     public ApplicationManager(String browser) {
-        this.browser = browser;
+        ApplicationManager.this.browser = browser;
     }
 
     public void init() {
         if (browser.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver();
+            sessionHelper.wd = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
+            sessionHelper.wd = new ChromeDriver();
         } else if (browser.equals(BrowserType.SAFARI)) {
-            wd = new SafariDriver();
+            sessionHelper.wd = new SafariDriver();
         }
         //wd = new FirefoxDriver();
-        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        groupHelper = new GroupHelper(wd);
-        navigationHelper = new NavigationHelper(wd);
-        contactHelper = new ContactHelper(wd);
-        sessionHelper = new SessionHelper(wd);
+        contactHelper.wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        groupHelper = new GroupHelper(contactHelper.wd);
+        navigationHelper = new NavigationHelper(contactHelper.wd);
+        contactHelper = new ContactHelper(contactHelper.wd);
+        sessionHelper = new SessionHelper(sessionHelper.wd);
         sessionHelper.login("admin", "secret");
     }
 
-    public void submitContactCreation() {
-        groupHelper.submitGroupCreation();
-    }
-
-    public void checkContact() {
-        groupHelper.checkGroup();
-    }
-
     public void stop() {
-       wd.quit();
+       contactHelper.wd.quit();
     }
 
-    public boolean isElementPresent(By by) {
-      try {
-        wd.findElement(by);
-        return true;
-      } catch (NoSuchElementException e) {
-        return false;
-      }
-    }
-
-    public boolean isAlertPresent() {
-      try {
-        wd.switchTo().alert();
-        return true;
-      } catch (NoAlertPresentException e) {
-        return false;
-      }
-    }
-
-//    public void logout() {
+    //    public void logout() {
 //      wd.findElement(By.linkText("Logout")).click();
 //    }
 //
@@ -84,10 +60,6 @@ public class ApplicationManager {
 //      wd.findElement(By.xpath("//input[@value='Login']")).click();
 //    }
 
-    public void deleteContact() {
-      wd.findElement(By.xpath("//input[@value='Delete']")).click();
-    }
-
     public GroupHelper getGroupHelper() {
         return groupHelper;
     }
@@ -99,4 +71,27 @@ public class ApplicationManager {
     public ContactHelper getContactHelper() {
         return contactHelper;
     }
+//    public void submitContactCreation() {
+//        groupHelper.submitGroupCreation();
+//    }
+//
+//    //private class MyContactHelper extends ContactHelper {
+//        public boolean isElementPresent(By by) {
+//          try {
+//            wd.findElement(by);
+//            return true;
+//          } catch (NoSuchElementException e) {
+//            return false;
+//          }
+//        }
+//
+//        public boolean isAlertPresent() {
+//          try {
+//            wd.switchTo().alert();
+//            return true;
+//          } catch (NoAlertPresentException e) {
+//            return false;
+//          }
+//        }
+//    }
 }

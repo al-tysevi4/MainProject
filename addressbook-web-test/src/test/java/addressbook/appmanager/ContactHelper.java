@@ -10,6 +10,7 @@ import org.testng.Assert;
 
 public class ContactHelper extends HelperBase {
 
+    //WebDriver wd;
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
@@ -41,5 +42,22 @@ public class ContactHelper extends HelperBase {
 
     public void pressEdit() {
       wd.findElement(By.xpath("//img[@alt='Edit']")).click();
+    }
+//    public void submitContactCreation() {
+//        groupHelper.submitGroupCreation();
+//    }
+//    public void checkContact() {
+//        groupHelper.checkGroup();
+    //}
+    public void deleteContact() {
+        wd.switchTo().alert().accept();
+        wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    }
+    public void checkContact() {
+        wd.findElement(By.name("selected[]"));
+    }
+
+    public void submitContactCreation() {
+        wd.findElement(By.name("submit"));
     }
 }

@@ -11,7 +11,7 @@ public class ContactModificationTests extends  TestBase{
 
   @Test
   public void testContactModification() throws Exception {
-    app.checkContact();
+    app.getContactHelper().checkContact();
     app.getContactHelper().pressEdit();
     app.getContactHelper().fillLastname(new ContactData1("tysevich", null), false);
     app.getContactHelper().pressUpdate();
