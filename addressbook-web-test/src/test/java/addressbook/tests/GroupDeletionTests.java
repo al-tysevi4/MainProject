@@ -16,5 +16,6 @@ public class GroupDeletionTests extends TestBase{
     }
     app.getGroupHelper().checkGroup();
     app.getGroupHelper().deleteGroup();
+    app.getGroupHelper().returnToGroupPage();
   }
 }
