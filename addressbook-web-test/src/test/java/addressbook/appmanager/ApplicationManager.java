@@ -33,29 +33,13 @@ public class ApplicationManager {
         } else if (browser.equals(BrowserType.SAFARI)) {
             wd = new SafariDriver();
         }
-        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
         contactHelper = new ContactHelper(wd);
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
         sessionHelper.login("admin", "secret");
-
-        //{
-
-//        if (browser.equals(BrowserType.FIREFOX)) {
-//            sessionHelper.wd = new FirefoxDriver();
-//        } else if (browser.equals(BrowserType.CHROME)) {
-//            sessionHelper.wd = new ChromeDriver();
-//        } else if (browser.equals(BrowserType.SAFARI)) {
-//            sessionHelper.wd = new SafariDriver();
-//        }
-//        contactHelper.wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-//        groupHelper = new GroupHelper(groupHelper.wd);
-//        navigationHelper = new NavigationHelper(navigationHelper.wd);
-//        contactHelper = new ContactHelper(contactHelper.wd);
-//        sessionHelper = new SessionHelper(sessionHelper.wd);
-//        sessionHelper.login("admin", "secret");
     }
 
     public void stop() {
