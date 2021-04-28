@@ -15,10 +15,10 @@ public class ContactDeletionTests extends TestBase {
       app.getNavigationHelper().gotoAddNewPage();
       app.getContactHelper().fillContactForm(new ContactData("alex", "test1"),true);
       app.getContactHelper().submitContactCreation();
-      //app.getNavigationHelper().returnToHomePage();
+
     }
     app.getContactHelper().checkContact();
     app.getContactHelper().deleteContact();
-    //app.getNavigationHelper().returnToHomePage();
+
   }
 }

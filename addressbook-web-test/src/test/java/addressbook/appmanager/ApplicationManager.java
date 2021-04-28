@@ -33,7 +33,7 @@ public class ApplicationManager {
         } else if (browser.equals(BrowserType.SAFARI)) {
             wd = new SafariDriver();
         }
-        wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
         contactHelper = new ContactHelper(wd);
         groupHelper = new GroupHelper(wd);
@@ -44,6 +44,9 @@ public class ApplicationManager {
 
     public void stop() {
        wd.quit();
+    }
+    public void logout() {
+        wd.findElement(By.linkText("Logout")).click();
     }
 
     public GroupHelper getGroupHelper() {
