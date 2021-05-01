@@ -20,12 +20,10 @@ public class ContactDeletionTests extends TestBase {
       app.getContactHelper().fillContactForm(new ContactData("alex", "test1"),true);
       app.getContactHelper().submitContactCreation();
         }
-        int after  = app.getContactHelper().getContactCount();
-        Assert.assertEquals(after, before - 1);
         app.getContactHelper().checkContact();
         app.getContactHelper().deleteContact();
-        //app.getNavigationHelper().returnToHomePage();
-//        int after  = app.getContactHelper().getContactCount();
-//        Assert.assertEquals(after, before - 1);
+        app.getNavigationHelper().returnToHomePage();
+        int after  = app.getContactHelper().getContactCount();
+        Assert.assertEquals(after, before - 1);
   }
 }

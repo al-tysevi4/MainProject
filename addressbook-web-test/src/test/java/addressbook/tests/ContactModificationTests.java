@@ -14,10 +14,10 @@ public class ContactModificationTests extends  TestBase{
 
   @Test
   public void testContactModification() throws Exception {
-    //int before  = app.getContactHelper().getContactCount();
+    int before  = app.getContactHelper().getContactCount();
     if (! app.getContactHelper().isThereAContact()) {
       app.getNavigationHelper().gotoAddNewPage();
-      int before  = app.getContactHelper().getContactCount();
+      //int before  = app.getContactHelper().getContactCount();
       app.getContactHelper().fillContactForm(new ContactData("alex", "test1"), true);
       app.getContactHelper().submitContactCreation();
     }
