@@ -44,10 +44,14 @@ public class ContactHelper extends HelperBase {
     }
 
     public void submitContactCreation() {
-       click(By.name("submit"));
+        click(By.name("submit"));
     }
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 }
