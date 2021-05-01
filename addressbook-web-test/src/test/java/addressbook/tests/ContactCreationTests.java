@@ -15,11 +15,15 @@ public class ContactCreationTests extends TestBase{
     app.getNavigationHelper().gotoAddNewPage();
     int before  = app.getContactHelper().getContactCount();
     app.getContactHelper().fillContactForm(new ContactData("alex", "test1"),true);
+//    int after  = app.getContactHelper().getContactCount();
+//    Assert.assertEquals(after, before + 1);
     app.getContactHelper().submitContactCreation();
-    //int before  = app.getContactHelper().getContactCount();
+//    int after  = app.getContactHelper().getContactCount();
+//    Assert.assertEquals(after, before + 1);
     app.getNavigationHelper().returnToHomePage();
-    app.logout();
     int after  = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before);
+    Assert.assertEquals(after, before + 1);
+    app.logout();
+
   }
 }

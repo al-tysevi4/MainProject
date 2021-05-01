@@ -9,19 +9,23 @@ import org.testng.annotations.*;
 public class ContactDeletionTests extends TestBase {
 
 
+    private int before;
 
-  @Test
+    @Test
   public void testContactDeletion() throws Exception {
       int before  = app.getContactHelper().getContactCount();
         if (! app.getContactHelper().isThereAContact()) {
       app.getNavigationHelper().gotoAddNewPage();
+      //int before  = app.getContactHelper().getContactCount();
       app.getContactHelper().fillContactForm(new ContactData("alex", "test1"),true);
       app.getContactHelper().submitContactCreation();
         }
+        int after  = app.getContactHelper().getContactCount();
+        Assert.assertEquals(after, before - 1);
         app.getContactHelper().checkContact();
-      //int before  = app.getContactHelper().getContactCount();
-      app.getContactHelper().deleteContact();
-      int after  = app.getContactHelper().getContactCount();
-      Assert.assertEquals(after, before);
+        app.getContactHelper().deleteContact();
+        //app.getNavigationHelper().returnToHomePage();
+//        int after  = app.getContactHelper().getContactCount();
+//        Assert.assertEquals(after, before - 1);
   }
 }

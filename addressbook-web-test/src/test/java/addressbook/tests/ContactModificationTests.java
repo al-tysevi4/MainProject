@@ -10,18 +10,22 @@ import org.testng.annotations.*;
 public class ContactModificationTests extends  TestBase{
 
 
+  private int before;
+
   @Test
   public void testContactModification() throws Exception {
+    //int before  = app.getContactHelper().getContactCount();
     if (! app.getContactHelper().isThereAContact()) {
       app.getNavigationHelper().gotoAddNewPage();
+      int before  = app.getContactHelper().getContactCount();
       app.getContactHelper().fillContactForm(new ContactData("alex", "test1"), true);
       app.getContactHelper().submitContactCreation();
     }
     app.getContactHelper().checkContact();
     app.getContactHelper().pressEdit();
-    int before  = app.getContactHelper().getContactCount();
     app.getContactHelper().fillLastname(new ContactData1("tysevich", null), false);
     app.getContactHelper().pressUpdate();
+    app.getNavigationHelper().returnToHomePage();
     int after  = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before);
   }
