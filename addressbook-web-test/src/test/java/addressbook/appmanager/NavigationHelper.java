@@ -29,9 +29,9 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void returnToHomePage() {
-        if (! isElementPresent(By.id("maintable"))) {
-          return;
-        }
+//        if (! isElementPresent(By.id("maintable"))) {
+//          return;
+//        }
         wd.findElement(By.linkText("home")).click();
     }
 
@@ -40,6 +40,9 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void goToHomePage() {
+        if (! isElementPresent(By.id("maintable"))) {
+          return;
+        }
         wd.findElement(By.linkText("home")).click();
     }
 }

@@ -41,6 +41,7 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.cssSelector("div.msgbox"));
     }
     public void checkContact() {
+        //wd.findElements(By.name("selected[]")).get(index).click();
         click(By.name("selected[]"));
     }
 

@@ -13,13 +13,14 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
   public void testContactDeletion() throws Exception {
+        app.getNavigationHelper().goToHomePage();
+        int before  = app.getContactHelper().getContactCount();
         if (! app.getContactHelper().isThereAContact()) {
       app.getNavigationHelper().gotoAddNewPage();
       app.getContactHelper().fillContactForm(new ContactData("alex", "test1"),true);
       app.getContactHelper().submitContactCreation();
         }
         app.getContactHelper().checkContact();
-        int before  = app.getContactHelper().getContactCount();
         app.getContactHelper().deleteContact();
         app.getNavigationHelper().returnToHomePage();
         int after  = app.getContactHelper().getContactCount();
