@@ -31,8 +31,8 @@ public class ContactHelper extends HelperBase {
       click(By.name("update"));
     }
 
-    public void fillLastname(ContactData1 contactData1, boolean creation) {
-        type(By.name("lastname"), contactData1.getLastname());
+    public void fillLastname(ContactData contactData, boolean creation) {
+        type(By.name("lastname"), contactData.getLastname());
     }
 
     public void pressEdit() {
@@ -63,10 +63,11 @@ public class ContactHelper extends HelperBase {
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("tr.odd"));
+        List<WebElement> elements = wd.findElements(By.name("selected[]"));
         for (WebElement element : elements) {
             String name = element.getText();
-            ContactData contact = new ContactData(name, null);
+            //String id = element.findElement(By.tagName("input")).getAttribute("value");
+            ContactData contact = new ContactData(name, null,null);
             contacts.add(contact);
         }
         return contacts;
