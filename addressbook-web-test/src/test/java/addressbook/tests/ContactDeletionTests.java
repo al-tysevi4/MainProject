@@ -11,8 +11,6 @@ import java.util.List;
 public class ContactDeletionTests extends TestBase {
 
 
-    //private int before;
-
     @Test
   public void testContactDeletion() throws Exception {
         app.getNavigationHelper().goToHomePage();
