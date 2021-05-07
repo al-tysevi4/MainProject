@@ -20,14 +20,13 @@ public class ContactModificationTests extends  TestBase{
     app.getNavigationHelper().goToHomePage();
     if (! app.getContactHelper().isThereAContact()) {
       app.getNavigationHelper().gotoAddNewPage();
-      app.getContactHelper().fillContactForm(new ContactData("alex", null, "test1"), true);
+      app.getContactHelper().fillContactForm(new ContactData("alex", null), true);
       app.getContactHelper().submitContactCreation();
     }
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().checkContact(before.size() - 1);
-    app.getContactHelper().pressEdit();
-    ContactData contact =  new ContactData(null,"tysevich", "test1");
-    app.getContactHelper().fillLastname(contact, false);
+    app.getContactHelper().pressEdit(before.size() - 1);// не получается сделать get(index) в методе
+    ContactData contact =  new ContactData("tysevich", null);
     app.getContactHelper().pressUpdate();
     app.getNavigationHelper().returnToHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();

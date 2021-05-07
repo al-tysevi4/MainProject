@@ -31,12 +31,13 @@ public class ContactHelper extends HelperBase {
       click(By.name("update"));
     }
 
-    public void fillLastname(ContactData contactData, boolean creation) {
+    public void fillLastname(ContactData contactData) {
         type(By.name("lastname"), contactData.getLastname());
     }
 
-    public void pressEdit() {
-      click(By.xpath("//img[@alt='Edit']"));
+    public void pressEdit(int index) {
+      //wd.findElement(By.xpath("//img[@alt='Edit']")).get(index).click();
+        wd.findElement(By.xpath("//img[@alt='Edit']")).click();
     }
 
     public void deleteContact() {
@@ -65,9 +66,10 @@ public class ContactHelper extends HelperBase {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
-            String name = element.getText();
-            //String id = element.findElement(By.tagName("input")).getAttribute("value");
-            ContactData contact = new ContactData(name, null,null);
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            String firstname = element.findElement(By.xpath(".//td[2]")).getText();
+            ContactData contact = new ContactData(id, firstname, null,null);
             contacts.add(contact);
         }
         return contacts;
