@@ -35,7 +35,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"), contactData.getLastname());
     }
 
-    public void pressEdit(int index) {
+    public void pressEdit() {
       //wd.findElement(By.xpath("//img[@alt='Edit']")).get(index).click();
         wd.findElement(By.xpath("//img[@alt='Edit']")).click();
     }
@@ -69,7 +69,7 @@ public class ContactHelper extends HelperBase {
             List<WebElement> cells = element.findElements(By.tagName("td"));
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String firstname = element.findElement(By.xpath(".//td[2]")).getText();
-            ContactData contact = new ContactData(id, firstname, null,null);
+            ContactData contact = new ContactData(id, firstname, null);
             contacts.add(contact);
         }
         return contacts;
