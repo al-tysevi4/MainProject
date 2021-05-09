@@ -19,16 +19,15 @@ public class ContactModificationTests extends  TestBase{
     app.getNavigationHelper().goToHomePage();
     if (! app.getContactHelper().isThereAContact()) {
       app.getNavigationHelper().gotoAddNewPage();
-      app.getContactHelper().fillContactForm(new ContactData(0,"alex", null), true);
+      app.getContactHelper().fillContactForm(new ContactData("alex", "test1"), true);
       app.getContactHelper().submitContactCreation();
     }
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().checkContact(before.size() - 1);
 
-    app.getContactHelper().pressEdit();// не получается сделать get(index) в методе
-    //int id = before.get(before.size() - 1).getId();
+    app.getContactHelper().pressEdit();
     ContactData contact =  new ContactData(before.get(before.size() - 1).getId(),"tysevich", null);
-
+    app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().pressUpdate();
     app.getNavigationHelper().returnToHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
@@ -36,7 +35,6 @@ public class ContactModificationTests extends  TestBase{
 
     before.remove(before.size() - 1);
     before.add(contact);
-    //int id = before.get(before.size() - 1).getId();
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 }

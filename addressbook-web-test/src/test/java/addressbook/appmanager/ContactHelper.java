@@ -35,6 +35,10 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"), contactData.getLastname());
     }
 
+    public void fillFirstName(ContactData contactData) {
+        type(By.name("firstname"), contactData.getFirstname());
+    }
+
     public void pressEdit() {
       //wd.findElement(By.xpath("//img[@alt='Edit']")).get(index).click();
         wd.findElement(By.xpath("//img[@alt='Edit']")).click();
@@ -67,7 +71,7 @@ public class ContactHelper extends HelperBase {
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(By.tagName("td"));
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            int id = Integer.parseInt(element.findElement(By.xpath(".//td/input")).getAttribute("value"));
             String firstname = element.findElement(By.xpath(".//td[2]")).getText();
             ContactData contact = new ContactData(id, firstname, null);
             contacts.add(contact);

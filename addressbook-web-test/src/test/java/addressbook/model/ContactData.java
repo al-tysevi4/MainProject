@@ -13,7 +13,7 @@ public class ContactData {
     private final String lastname;
 
     public ContactData(String firstname, String lastname) {
-        this.id = id;
+        this.id = 0;
         this.firstname = firstname;
         this.lastname = lastname;
         this.group = group;
@@ -25,7 +25,7 @@ public class ContactData {
     }
 
     public ContactData(int id, String firstname, String group) {
-        this.id = 0;
+        this.id = id;
         this.firstname = firstname;
         this.group = group;
         this.lastname = null;
