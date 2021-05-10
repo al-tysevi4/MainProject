@@ -39,9 +39,9 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contactData.getFirstname());
     }
 
-    public void pressEdit() {
-      //wd.findElement(By.xpath("//img[@alt='Edit']")).get(index).click();
-        wd.findElement(By.xpath("//img[@alt='Edit']")).click();
+    public void pressEdit(int index) {
+      wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+        //wd.findElement(By.xpath("//img[@alt='Edit']")).click();
     }
 
     public void deleteContact() {
@@ -72,8 +72,8 @@ public class ContactHelper extends HelperBase {
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(By.tagName("td"));
             int id = Integer.parseInt(element.findElement(By.xpath(".//td/input")).getAttribute("value"));
-            String firstname = element.findElement(By.xpath(".//td[2]")).getText();
-            ContactData contact = new ContactData(id, firstname, null);
+            String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+            ContactData contact = new ContactData(id, firstname, "test1");
             contacts.add(contact);
         }
         return contacts;

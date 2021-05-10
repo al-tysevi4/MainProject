@@ -10,9 +10,9 @@ public class ContactData {
     private int id;
     private final String firstname;
     private String group;
-    private final String lastname;
+    private String lastname;
 
-    public ContactData(String firstname, String lastname) {
+    public ContactData(String firstname, String lastname, String group) {
         this.id = 0;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -41,7 +41,7 @@ public class ContactData {
         this.id = id;
         this.firstname = firstname;
         this.group = group;
-        this.lastname = null;
+        //this.lastname = lastname;
     }
 
     public String getFirstname() {

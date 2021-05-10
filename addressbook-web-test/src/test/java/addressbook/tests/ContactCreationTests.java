@@ -18,7 +18,7 @@ public class ContactCreationTests extends TestBase{
     app.getNavigationHelper().goToHomePage();
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getNavigationHelper().gotoAddNewPage();
-    ContactData contact = new ContactData("alex", "test1");
+    ContactData contact = new ContactData("alex", null, "test1");
     app.getContactHelper().fillContactForm(contact, true);
     app.getContactHelper().submitContactCreation();
     app.getNavigationHelper().returnToHomePage();
@@ -34,8 +34,6 @@ public class ContactCreationTests extends TestBase{
     }
     contact.setId(max);
     before.add(contact);
-//    after.remove(after.size()-1);
-//    after.add(contact);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 }
