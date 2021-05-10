@@ -5,6 +5,7 @@ import addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ContactCreationTests extends TestBase{
     app.getNavigationHelper().goToHomePage();
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getNavigationHelper().gotoAddNewPage();
-    ContactData contact = new ContactData("alex", null, "test1");
+    ContactData contact = new ContactData("alexey", null, "test1");
     app.getContactHelper().fillContactForm(contact, true);
     app.getContactHelper().submitContactCreation();
     app.getNavigationHelper().returnToHomePage();
@@ -26,14 +27,11 @@ public class ContactCreationTests extends TestBase{
     Assert.assertEquals(after.size(), before.size() + 1);
     app.logout();
 
-    int max = 0;
-    for (ContactData c : after) {
-      if (c.getId() > max) {
-        max = c.getId();
-      }
-    }
-    contact.setId(max);
+    //contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     before.add(contact);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 }

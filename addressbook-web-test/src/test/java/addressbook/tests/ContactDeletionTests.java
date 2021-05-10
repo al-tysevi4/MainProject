@@ -20,18 +20,13 @@ public class ContactDeletionTests extends TestBase {
       app.getContactHelper().submitContactCreation();
         }
         List<ContactData> before = app.getContactHelper().getContactList();
-        //int before  = app.getContactHelper().getContactCount();
         app.getContactHelper().checkContact(before.size() - 1);
         app.getContactHelper().deleteContact();
         app.getNavigationHelper().returnToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
-        //int after  = app.getContactHelper().getContactCount();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(before.size() - 1);
         Assert.assertEquals(before, after);
-//        for (int i = 0; i < after.size(); i++) {
-//        Assert.assertEquals(before.get(i), after.get(i));
-//        }
     }
 }
