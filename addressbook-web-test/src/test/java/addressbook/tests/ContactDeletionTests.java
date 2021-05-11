@@ -11,18 +11,18 @@ import java.util.List;
 public class ContactDeletionTests extends TestBase {
 
 
-    @Test
+    @Test //(enabled = false)
   public void testContactDeletion() throws Exception {
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
         if (! app.getContactHelper().isThereAContact()) {
-      app.getNavigationHelper().gotoAddNewPage();
-      app.getContactHelper().fillContactForm(new ContactData(0,"alex","test1"), true);
+      app.goTo().gotoAddNewPage();
+      app.getContactHelper().fillContactForm(new ContactData("alex","test1","tysevich", null), true);
       app.getContactHelper().submitContactCreation();
         }
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().checkContact(before.size() - 1);
         app.getContactHelper().deleteContact();
-        app.getNavigationHelper().returnToHomePage();
+        app.goTo().returnToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 

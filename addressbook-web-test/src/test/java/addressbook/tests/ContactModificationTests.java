@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -15,22 +14,22 @@ public class ContactModificationTests extends  TestBase{
 
   private int before;
 
-  @Test
+  @Test //(enabled = false)
   public void testContactModification() throws Exception {
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().goToHomePage();
     if (! app.getContactHelper().isThereAContact()) {
-      app.getNavigationHelper().gotoAddNewPage();
-      app.getContactHelper().fillContactForm(new ContactData(0,"alex", "test1"), true);
+      app.goTo().gotoAddNewPage();
+      app.getContactHelper().fillContactForm(new ContactData("alex", "test1", "tysevich", null), true);
       app.getContactHelper().submitContactCreation();
     }
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().checkContact(before.size() - 1);
 
     app.getContactHelper().pressEdit(before.size() - 1);
-    ContactData contact =  new ContactData(before.get(before.size() - 1).getId(),"tysevich", "test1");
+    ContactData contact =  new ContactData("alexey", "test1", "tysevich", null);
     app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().pressUpdate();
-    app.getNavigationHelper().returnToHomePage();
+    app.goTo().returnToHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
 
