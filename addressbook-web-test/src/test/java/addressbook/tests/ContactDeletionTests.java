@@ -1,32 +1,29 @@
 package addressbook.tests;
 
-
 import addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 import java.util.List;
 
 
 public class ContactDeletionTests extends TestBase {
-
+    @BeforeMethod
+    public void ensureContactPreconditions() {
+        app.goTo().homePage();
+        if (app.contact().list().size() == 0) {
+            app.contact().create(new ContactData("alex", "test1", "tysevich", null));
+        }
+    }
 
     @Test //(enabled = false)
   public void testContactDeletion() throws Exception {
-        app.goTo().goToHomePage();
-        if (! app.getContactHelper().isThereAContact()) {
-      app.goTo().gotoAddNewPage();
-      app.getContactHelper().fillContactForm(new ContactData("alex","test1","tysevich", null), true);
-      app.getContactHelper().submitContactCreation();
-        }
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().checkContact(before.size() - 1);
-        app.getContactHelper().deleteContact();
-        app.goTo().returnToHomePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().list();
+        int index = before.size() - 1;
+        app.contact().delete(index);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(before.size() - 1);
+        before.remove(index);
         Assert.assertEquals(before, after);
     }
 }

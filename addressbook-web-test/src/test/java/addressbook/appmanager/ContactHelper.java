@@ -20,6 +20,10 @@ public class ContactHelper extends HelperBase {
 
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
+        type(By.name("lastname"), contactData.getLastname());
+        //type(By.name("email"), contactData.getEmail());
+        type(By.name("mobile"), contactData.getMobile());
+
         if(creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
         } else {
@@ -66,16 +70,58 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(By.tagName("td"));
             int id = Integer.parseInt(element.findElement(By.xpath(".//td/input")).getAttribute("value"));
             String firstname = element.findElement(By.xpath(".//td[3]")).getText();
-            ContactData contact = new ContactData(id, firstname, "test1");
+//            WebElement  email = element.findElement(By.xpath(".//td[5]"));
+//            String emailText;
+//            if (email != null) {
+//                emailText = email.getText();
+//            }
+            //String email = element.findElement(By.xpath(".//td[5]")).getText();
+            String mobile = element.findElement(By.xpath(".//td[6]")).getText();
+            String lastname = element.findElement(By.xpath(".//td[2]")).getText();
+            ContactData contact = new ContactData(firstname,"test1", lastname, mobile);
             contacts.add(contact);
         }
         return contacts;
+    }
+    public void gotoAddNewPage() {
+        click(By.linkText("add new"));
+    }
+
+    public void homePage() {
+        if (! isElementPresent(By.id("maintable"))) {
+            return;
+        }
+        wd.findElement(By.linkText("home")).click();
+    }
+    public void returnToHomePage() {
+//        if (! isElementPresent(By.id("maintable"))) {
+//          return;
+//        }
+        wd.findElement(By.linkText("home")).click();
+    }
+    public void create(ContactData contact) {
+        gotoAddNewPage();
+        fillContactForm(contact, true);
+        submitContactCreation();
+        returnToHomePage();
+    }
+    public void modify(int index, ContactData contact) {
+        checkContact(index);
+        pressEdit(index);
+        fillContactForm(contact, false);
+        pressUpdate();
+        returnToHomePage();
+    }
+    public void delete(int index) {
+        checkContact(index);
+        deleteContact();
+        returnToHomePage();
     }
 }
