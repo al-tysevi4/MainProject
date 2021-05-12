@@ -1,17 +1,66 @@
 package addressbook.model;
 
+import org.openqa.selenium.WebElement;
+
 import java.util.Objects;
 
 public class ContactData {
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    private int id;
-    private final String firstname;
+    private int id = Integer.MAX_VALUE;
+    private String firstname;
     private String group;
     private String lastname;
+    //private WebElement email;
+    private String mobile;
 
+
+    public ContactData withId(int id) {
+        this.id = id;
+        return this;
+    }
+    public ContactData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+    public ContactData withMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+//    public ContactData(int id, String firstname, String group, String lastname, String email, String mobile) {
+//        this.firstname = firstname;
+//        this.group = group;
+//        this.lastname = lastname;
+//        //this.email = email;
+//        this.mobile = mobile;
+//        this.id = Integer.MAX_VALUE;
+//    }
+//    public ContactData(String firstname, String group, String lastname, String mobile) {
+//        this.firstname = firstname;
+//        this.group = group;
+//        this.lastname = lastname;
+//        //this.email = this.email;
+//        this.mobile = mobile;
+//        //this.id = Integer.MAX_VALUE;
+//    }
+
+//    public ContactData(int id, String s, String test1, String firstname, String group) {
+//        //this.id = id;
+//        this.firstname = firstname;
+//        this.group = group;
+//        //this.lastname = lastname;
+//    }
+    public int getId() {
+        return id;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -19,31 +68,10 @@ public class ContactData {
         ContactData that = (ContactData) o;
         return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(firstname, lastname);
     }
-
-    public ContactData(String firstname, String lastname, String group) {
-        this.id = Integer.MAX_VALUE;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.group = group;
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public ContactData(int id, String firstname, String group) {
-        this.id = id;
-        this.firstname = firstname;
-        this.group = group;
-        //this.lastname = lastname;
-    }
-
     public String getFirstname() {
         return firstname;
     }
@@ -63,5 +91,16 @@ public class ContactData {
                 ", group='" + group + '\'' +
                 ", lastname='" + lastname + '\'' +
                 '}';
+    }
+
+//    public String getEmail() {
+//        return email;
+//    }
+//        public String getEmail() {
+//        return String.valueOf(email);
+//    }
+
+    public String getMobile() {
+        return mobile;
     }
 }

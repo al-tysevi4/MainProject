@@ -11,7 +11,10 @@ public class ContactDeletionTests extends TestBase {
     public void ensureContactPreconditions() {
         app.goTo().homePage();
         if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData("alex", "test1", "tysevich", null));
+            app.contact().create(new ContactData()
+                    .withFirstname("alex")
+                    .withGroup("test1")
+                    .withFirstname("tysevich"));
         }
     }
 
@@ -26,4 +29,5 @@ public class ContactDeletionTests extends TestBase {
         before.remove(index);
         Assert.assertEquals(before, after);
     }
+    //("alex", "test1", "tysevich", null));
 }

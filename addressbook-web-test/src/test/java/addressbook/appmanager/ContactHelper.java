@@ -85,8 +85,19 @@ public class ContactHelper extends HelperBase {
             //String email = element.findElement(By.xpath(".//td[5]")).getText();
             String mobile = element.findElement(By.xpath(".//td[6]")).getText();
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
-            ContactData contact = new ContactData(firstname,"test1", lastname, mobile);
-            contacts.add(contact);
+//            ContactData contact = new ContactData()
+//                    .withId(id)
+//                    .withFirstname(firstname)
+//                    .withGroup("test1")
+//                    .withLastname(lastname)
+//                    .withMobile(mobile);
+            contacts.add(new ContactData()
+                    .withId(id)
+                    .withFirstname(firstname)
+                    .withGroup("test1")
+                    .withLastname(lastname)
+                    .withMobile(mobile));
+            //(firstname,"test1", lastname, mobile);
         }
         return contacts;
     }
