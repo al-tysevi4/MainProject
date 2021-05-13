@@ -2,11 +2,11 @@ package addressbook.tests;
 
 
 import addressbook.model.ContactData;
-import org.testng.Assert;
+import addressbook.model.Contacts;
 import org.testng.annotations.*;
-
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 
 public class ContactModificationTests extends  TestBase{
@@ -22,32 +22,16 @@ public class ContactModificationTests extends  TestBase{
 
   @Test //(enabled = false)
   public void testContactModification() throws Exception {
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
+    Contacts before = app.contact().all();
+    ContactData modifiedContact = before.iterator().next();
     ContactData contact =  new ContactData()
-            .withId(before.get(index).getId())
+            .withId(modifiedContact.getId())
             .withFirstname("alexey")
             .withGroup("test1")
             .withLastname("tysevich");
-    app.contact().modify(index, contact);
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size());
-
-    before.remove(index);
-    before.add(contact);
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    app.contact().modify(contact);
+    Contacts after = app.contact().all();
+    assertEquals(after.size(), before.size());
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
-
-//  private void modifyContact(int index, ContactData contact) {
-//    app.getContactHelper().checkContact(index);
-//    app.getContactHelper().pressEdit(index);
-//    app.getContactHelper().fillContactForm(contact, false);
-//    app.getContactHelper().pressUpdate();
-//    app.goTo().returnToHomePage();
-//  }
-  //("alex", "test1", "tysevich", null));
-  //("alexey", "test1", "tysevich", null);
 }

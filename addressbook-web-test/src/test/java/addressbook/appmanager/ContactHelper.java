@@ -2,6 +2,7 @@ package addressbook.appmanager;
 
 import addressbook.model.ContactData;
 import addressbook.model.ContactData1;
+import addressbook.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +11,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -44,8 +47,8 @@ public class ContactHelper extends HelperBase {
     }
 
     public void pressEdit(int index) {
-      wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
-        //wd.findElement(By.xpath("//img[@alt='Edit']")).click();
+      //wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+        wd.findElement(By.xpath("//img[@alt='Edit']")).click();
     }
 
     public void deleteContact() {
@@ -55,6 +58,10 @@ public class ContactHelper extends HelperBase {
     }
     public void checkContact(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
+        //click(By.name("selected[]"));
+    }
+    public void checkContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
         //click(By.name("selected[]"));
     }
 
@@ -101,6 +108,37 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
+    public Contacts all() {
+        Contacts contacts = new Contacts();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element : elements) {
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+            int id = Integer.parseInt(element.findElement(By.xpath(".//td/input")).getAttribute("value"));
+            String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+//            WebElement  email = element.findElement(By.xpath(".//td[5]"));
+//            String emailText;
+//            if (email != null) {
+//                emailText = email.getText();
+//            }
+            //String email = element.findElement(By.xpath(".//td[5]")).getText();
+            String mobile = element.findElement(By.xpath(".//td[6]")).getText();
+            String lastname = element.findElement(By.xpath(".//td[2]")).getText();
+//            ContactData contact = new ContactData()
+//                    .withId(id)
+//                    .withFirstname(firstname)
+//                    .withGroup("test1")
+//                    .withLastname(lastname)
+//                    .withMobile(mobile);
+            contacts.add(new ContactData()
+                    .withId(id)
+                    .withFirstname(firstname)
+                    .withGroup("test1")
+                    .withLastname(lastname)
+                    .withMobile(mobile));
+            //(firstname,"test1", lastname, mobile);
+        }
+        return contacts;
+    }
     public void gotoAddNewPage() {
         click(By.linkText("add new"));
     }
@@ -112,9 +150,6 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.linkText("home")).click();
     }
     public void returnToHomePage() {
-//        if (! isElementPresent(By.id("maintable"))) {
-//          return;
-//        }
         wd.findElement(By.linkText("home")).click();
     }
     public void create(ContactData contact) {
@@ -123,15 +158,26 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
         returnToHomePage();
     }
-    public void modify(int index, ContactData contact) {
-        checkContact(index);
-        pressEdit(index);
+    public void modify( ContactData contact) {
+        checkContactById(contact.getId());
+        pressEditById(contact.getId());
         fillContactForm(contact, false);
         pressUpdate();
         returnToHomePage();
     }
+
+    private void pressEditById(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id +"']")).click();
+        //wd.findElement(By.xpath("//img[@alt='Edit" + id +"']")).click();
+    }
     public void delete(int index) {
         checkContact(index);
+        deleteContact();
+        returnToHomePage();
+    }
+
+    public void delete(ContactData contact) {
+        checkContactById(contact.getId());
         deleteContact();
         returnToHomePage();
     }

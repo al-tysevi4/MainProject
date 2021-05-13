@@ -1,10 +1,10 @@
 package addressbook.tests;
 
 import addressbook.model.ContactData;
-import org.testng.Assert;
+import addressbook.model.Contacts;
 import org.testng.annotations.*;
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class ContactCreationTests extends TestBase{
@@ -12,22 +12,18 @@ public class ContactCreationTests extends TestBase{
   @Test   //(enabled = false)
   public void testContactCreation() throws Exception {
     app.goTo().homePage();
-    List<ContactData> before = app.contact().list();
+    Contacts before = app.contact().all();
     ContactData contact = new ContactData()
             .withFirstname("alexey")
             .withGroup("test1")
             .withLastname("tysevich")
             .withMobile("+345678945555");
     app.contact().create(contact);
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size() + 1);
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size() + 1));
     app.logout();
-
-    before.add(contact);
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(
+            before.withAdded(
+                    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
-  //("alexey", "test1", "tysevich", "+345678945555");
 }
