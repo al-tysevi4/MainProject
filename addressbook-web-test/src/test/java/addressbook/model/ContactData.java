@@ -1,5 +1,6 @@
 package addressbook.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.Objects;
@@ -10,9 +11,15 @@ public class ContactData {
     private String firstname;
     private String group;
     private String lastname;
-    //private WebElement email;
+    private String email;
     private String mobile;
-
+    private String allPhone;
+    private String homePhone;
+    private String workPhone;
+    private String address;
+    private String emailCom;
+    private String emailRu;
+    private String AllEmail;
 
     public ContactData withId(int id) {
         this.id = id;
@@ -34,24 +41,69 @@ public class ContactData {
         this.mobile = mobile;
         return this;
     }
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+    public ContactData withEmailCom(String emailCom) {
+        this.emailCom = emailCom;
+        return this;
+    }
+    public ContactData withEmailRu(String emailRu) {
+        this.emailRu = emailRu;
+        return this;
+    }
+    public ContactData withAllEmail(String AllEmail) {
+        this.AllEmail = AllEmail;
+        return this;
+    }
+    public ContactData withAllPhone(String allPhone) {
+        this.allPhone = allPhone;
+        return this;
+    }
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
+    public int getId() {
+        return id;
+    }
+    public String getFirstname() {
+        return firstname;
+    }
+    public String getGroup() {
+        return group;
+    }
+    public String getLastname() {
+        return lastname;
+    }
+    public String getMobile() { return mobile; }
+    public String getAllPhone() { return allPhone; }
+    public String getHomePhone() { return homePhone; }
+    public String getWorkPhone() { return workPhone; }
+    public String getAddress() { return address; }
+    public String getEmail() { return email; }
+    public String getEmailCom() { return emailCom; }
+    public String getEmailRu() { return emailRu; }
+    public String getAllEmail() { return  AllEmail; }
 
-//    public ContactData(int id, String firstname, String group, String lastname, String email, String mobile) {
-//        this.firstname = firstname;
-//        this.group = group;
-//        this.lastname = lastname;
-//        //this.email = email;
-//        this.mobile = mobile;
-//        this.id = Integer.MAX_VALUE;
-//    }
-//    public ContactData(String firstname, String group, String lastname, String mobile) {
-//        this.firstname = firstname;
-//        this.group = group;
-//        this.lastname = lastname;
-//        //this.email = this.email;
-//        this.mobile = mobile;
-//        //this.id = Integer.MAX_VALUE;
-//    }
-
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id='" + id + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", group='" + group + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,47 +115,5 @@ public class ContactData {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstname, lastname);
-    }
-
-    //    public ContactData(int id, String s, String test1, String firstname, String group) {
-//        //this.id = id;
-//        this.firstname = firstname;
-//        this.group = group;
-//        //this.lastname = lastname;
-//    }
-    public int getId() {
-        return id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-    public String getLastname() {
-        return lastname;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id='" + id + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", group='" + group + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
-    }
-
-//    public String getEmail() {
-//        return email;
-//    }
-//        public String getEmail() {
-//        return String.valueOf(email);
-//    }
-
-    public String getMobile() {
-        return mobile;
     }
 }
