@@ -26,7 +26,7 @@ public class ContactEmailTests extends TestBase {
         ContactData contact = app.contact().all().iterator().next();
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
-        MatcherAssert.assertThat(contact.getAllEmail(), CoreMatchers.equalTo(contactInfoFromEditForm.getAllEmail()));
+        MatcherAssert.assertThat(contact.getAllEmail(), CoreMatchers.equalTo(mergeEmail(contactInfoFromEditForm)));
 
 //        MatcherAssert.assertThat(contact.getEmail(), CoreMatchers.equalTo(cleaned(contactInfoFromEditForm.getEmail())));
 //        MatcherAssert.assertThat(contact.getEmailCom(), CoreMatchers.equalTo(cleaned(contactInfoFromEditForm.getEmailCom())));
@@ -35,7 +35,7 @@ public class ContactEmailTests extends TestBase {
     private String mergeEmail (ContactData contact) {
         return Arrays.asList(contact.getEmail(), contact.getEmailCom(), contact.getEmailRu())
                 .stream().filter((s) -> ! s.equals(""))
-                .map(ContactPhoneTests::cleaned)
+                .map(ContactEmailTests::cleaned)
                 .collect(Collectors.joining("\n"));
     }
 
