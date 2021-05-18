@@ -1,25 +1,40 @@
 package addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contact")
 public class ContactData {
-
+    @XStreamOmitField
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstname;
     private String group;
+    @Expose
     private String lastname;
+    @Expose
     private String email;
+    @Expose
     private String mobile;
     private String allPhone;
     private String homePhone;
     private String workPhone;
+    @Expose
     private String address;
     private String emailCom;
     private String emailRu;
     private String AllEmail;
+    private File photo;
+
+    public File getPhoto() {
+        return photo;
+    }
 
     public ContactData withId(int id) {
         this.id = id;
@@ -73,6 +88,11 @@ public class ContactData {
         this.workPhone = workPhone;
         return this;
     }
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
     public int getId() {
         return id;
     }
