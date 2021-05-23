@@ -14,12 +14,19 @@ public class ContactPhoneTests extends TestBase {
 
     @BeforeMethod
     public void ensureContactPreconditions() {
-        app.goTo().homePage();
-        if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData()
-                    .withFirstname("alex")
-                    .withGroup("test1")
-                    .withFirstname("tysevich"));
+        if(app.db().contacts().size() == 0) {
+            app.goTo().homePage();
+                app.contact().create(new ContactData()
+                        .withFirstname("firstname %s")
+                        .withGroup("group %s")
+                        .withFirstname("lastname %s"));
+//        app.goTo().homePage();
+//        if (app.contact().list().size() == 0) {
+//            app.contact().create(new ContactData()
+//                    .withFirstname("alex")
+//                    .withGroup("test1")
+//                    .withFirstname("tysevich"));
+
         }
     }
 
