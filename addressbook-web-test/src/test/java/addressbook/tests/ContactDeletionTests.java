@@ -24,7 +24,6 @@ public class ContactDeletionTests extends TestBase {
     @Test (dataProvider = "validContactsFromJson")//(enabled = false)
   public void testContactDeletion() throws Exception {
         Contacts before = app.db().contacts();
-        //Contacts before = app.contact().all();
         ContactData deletedContact = before.iterator().next();
         app.goTo().homePage();
         app.contact().delete(deletedContact);

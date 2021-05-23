@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class GroupCreationTests extends TestBase {
-//private Properties propGroups;
+
 Logger logger = LoggerFactory.getLogger(GroupCreationTests.class);
 
   @DataProvider
