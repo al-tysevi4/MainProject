@@ -1,2 +1,3 @@
 rootProject.name = 'MainProject'
+include 'mantis-tests'
 
