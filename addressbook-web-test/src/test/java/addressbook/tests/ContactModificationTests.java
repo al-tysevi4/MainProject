@@ -16,9 +16,9 @@ public class ContactModificationTests extends  TestBase{
     if (app.db().contacts().size() == 0) {
       app.goTo().homePage();
       app.contact().create(new ContactData()
-              .withFirstname("firstname %s")
-              .withGroup("group %s")
-              .withLastname("lastname %s"));
+              .withFirstname("alex")
+              .withGroup("test1")
+              .withLastname("tysevich"));
     }
   }
 
@@ -29,9 +29,9 @@ public class ContactModificationTests extends  TestBase{
     ContactData modifiedContact = before.iterator().next();
     ContactData contact =  new ContactData()
             .withId(modifiedContact.getId())
-            .withFirstname("firstname %s")
-            .withGroup("group %s")
-            .withLastname("lastname %s");
+            .withFirstname("alex")
+            .withGroup("test1")
+            .withLastname("tysevich");
     app.goTo().homePage();
     app.contact().modify(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
@@ -39,5 +39,9 @@ public class ContactModificationTests extends  TestBase{
     //Contacts after = app.contact().all();
     //assertEquals(after.size(), before.size());
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+
+    verifyContactListInUi();
   }
+
+
 }

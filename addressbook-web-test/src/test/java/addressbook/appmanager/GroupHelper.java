@@ -95,4 +95,13 @@ public class GroupHelper extends HelperBase {
         groupCache = null;
         returnToGroupPage();
     }
+    public int getGroupIdInDropdown() {
+        int groupIdInDropdown = Integer.parseInt(wd.findElement(By.cssSelector
+                ("#content > form:nth-child(10) > div.right > select > option:nth-child(1)"))
+                .getAttribute("value"));
+        return groupIdInDropdown;
+    }
+    public void checkGroupFromDropdownById(int id) {
+        wd.findElement(By.cssSelector(" form#right select option[value='" + id + "']"));
+    }
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,9 +30,15 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getHomePhone());
         type(By.name("work"), contactData.getWorkPhone());
+        type(By.name("email2"), contactData.getEmailCom());
+        type(By.name("email3"), contactData.getEmailRu());
+        attach(By.name("photo"), contactData.getPhoto());
 
         if(creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -63,8 +70,13 @@ public class ContactHelper extends HelperBase {
         wd.findElements(By.name("selected[]")).get(index).click();
         //click(By.name("selected[]"));
     }
+    public void checkContact() {
+        //wd.findElements(By.name("selected[]")).click();
+        click(By.name("selected[]"));
+    }
     public void checkContactById(int id) {
         wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
+        //wd.findElement(By.cssSelector("tr[name='entry'] input[value='" + id + "']")).click();
         //click(By.name("selected[]"));
     }
 
@@ -84,23 +96,13 @@ public class ContactHelper extends HelperBase {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
-            List<WebElement> cells = element.findElements(By.tagName("td"));
+            //List<WebElement> cells = element.findElements(By.tagName("td"));
             int id = Integer.parseInt(element.findElement(By.xpath(".//td/input")).getAttribute("value"));
             String firstname = element.findElement(By.xpath(".//td[3]")).getText();
-//            WebElement  email = element.findElement(By.xpath(".//td[5]"));
-//            String emailText;
-//            if (email != null) {
-//                emailText = email.getText();
-//            }
-            //String email = element.findElement(By.xpath(".//td[5]")).getText();
+            String email = element.findElement(By.xpath(".//td[5]")).getText();
             String mobile = element.findElement(By.xpath(".//td[6]")).getText();
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
-//            ContactData contact = new ContactData()
-//                    .withId(id)
-//                    .withFirstname(firstname)
-//                    .withGroup("test1")
-//                    .withLastname(lastname)
-//                    .withMobile(mobile);
+
             contacts.add(new ContactData()
                     .withId(id)
                     .withFirstname(firstname)
@@ -135,6 +137,8 @@ public class ContactHelper extends HelperBase {
             String allPhone = element.findElement(By.xpath(".//td[6]")).getText();
             String [] phones = element.findElement(By.xpath(".//td[6]")).getText().split("\n");
             String [] emails = element.findElement(By.xpath(".//td[5]")).getText().split("\n");
+
+            File photo = new File("src/test/resources/AndroidBug.jpg");
             contactCache.add(new ContactData()
                     .withId(id)
                     .withFirstname(firstname)
@@ -146,7 +150,8 @@ public class ContactHelper extends HelperBase {
                     //.withEmail(emails[0])
                     //.withEmailCom(emails[1])
                     //.withEmailRu(emails[2])
-                    .withAllEmail(AllEmail));
+                    .withAllEmail(AllEmail)
+                    .withPhoto(new File(String.valueOf(photo))));
 //                    .withHomePhone(phones[0])
                     //.withWorkPhone(phones[2]));
         }
@@ -233,4 +238,31 @@ public class ContactHelper extends HelperBase {
 //        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
+    public void pressAddTo() {
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void pressToGroup() {
+        wd.findElement(By.name("to_group"));
+        wd.findElement(By.cssSelector("input[value='']")).click();
+    }
+
+    public void addContactToGroupWithId(String grouopId) {
+        Select groupsDropdown = new Select(wd.findElement(By.name("to_group")));
+        groupsDropdown.selectByValue(grouopId);
+        addContactToGroup();
+    }
+
+    private void addContactToGroup() {
+        click(By.name("add"));
+    }
+
+    public void sortContactsByGroup(String id) {
+        Select groupsDropdown = new Select(wd.findElement(By.cssSelector("#right [name='group']")));
+        groupsDropdown.selectByValue(id);
+    }
+
+    public void removeContactFromGroup() {
+        wd.findElement(By.cssSelector("input[value='']")).click();
+    }
 }

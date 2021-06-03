@@ -8,23 +8,30 @@ import org.testng.annotations.Test;
 
 public class ContactAddressTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod //(dataProvider = "validContactsFromJson")
     public void ensureContactPreconditions() {
-        app.goTo().homePage();
-        if (app.contact().list().size() == 0) {
+        if(app.db().contacts().size() == 0) {
+            app.goTo().homePage();
             app.contact().create(new ContactData()
-                    .withFirstname("alex")
-                    .withGroup("test1")
-                    .withFirstname("tysevich"));
+                    .withFirstname("firstname %s")
+                    .withGroup("group %s")
+                    .withFirstname("lastname %s"));
+
+//        if (app.contact().list().size() == 0) {
+//            app.contact().create(new ContactData()
+//                    .withFirstname("alex")
+//                    .withGroup("test1")
+//                    .withFirstname("tysevich"));
+//
         }
     }
-    @Test
+
+    @Test //(dataProvider = "validContactsFromJson")
     public void testContactAddress () {
         app.goTo().homePage();
         ContactData contact = app.contact().all().iterator().next();
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
         MatcherAssert.assertThat(contact.getAddress(), CoreMatchers.equalTo(contactInfoFromEditForm.getAddress()));
-
     }
 }

@@ -12,6 +12,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/mantis-tests" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -24,6 +25,17 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/addressbook-web-test" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/mantis-tests" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/7.0/libexec" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/mantis-tests" />
           </set>
         </option>
       </GradleProjectSettings>

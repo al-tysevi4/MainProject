@@ -14,14 +14,14 @@ public class ContactDeletionTests extends TestBase {
         if(app.db().contacts().size() == 0) {
             app.goTo().homePage();
             app.contact().create(new ContactData()
-                    .withFirstname("firstname %s")
-                    .withGroup("group %")
-                    .withFirstname("lastname %"));
+                    .withFirstname("alex")
+                    .withGroup("test1")
+                    .withFirstname("tysevich"));
         }
     }
 
 
-    @Test (dataProvider = "validContactsFromJson")//(enabled = false)
+    @Test //(dataProvider = "validContactsFromJson")//(enabled = false)
   public void testContactDeletion() throws Exception {
         Contacts before = app.db().contacts();
         ContactData deletedContact = before.iterator().next();
@@ -32,5 +32,8 @@ public class ContactDeletionTests extends TestBase {
         //Contacts after = app.contact().all();
         //assertEquals(after.size(), before.size() - 1);
         assertThat(after, equalTo(before.without(deletedContact)));
+
+        verifyContactListInUi();
+
     }
 }

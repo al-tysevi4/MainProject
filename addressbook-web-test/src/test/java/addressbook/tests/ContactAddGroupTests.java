@@ -6,7 +6,7 @@ import addressbook.model.GroupData;
 import org.hibernate.SessionFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
+
 import org.testng.annotations.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,6 +19,7 @@ public class ContactAddGroupTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
+
         Contacts result = app.db().contacts();
 
         for (ContactData contact : result) {
@@ -26,16 +27,16 @@ public class ContactAddGroupTests extends TestBase {
                 maxId = contact.getId();
             }
         }
-
-        if (app.db().groups().size() == 0) {
-            app.goTo().groupPage();
-            app.group().create(new GroupData().withName("test 0"));
+        if (app.db().contacts().size() == 0) {
             app.goTo().homePage();
+            app.contact().create(new ContactData().withFirstname("alexey")
+                    .withLastname("yagudin"));
         }
     }
 
     @Test
     public void testContactAddGroup() throws Exception {
+
         //1. Берем контакт из БД по maxID до добавления его в группу
         ContactData contactInitial = null;
         Contacts before = app.db().contacts();
@@ -58,6 +59,7 @@ public class ContactAddGroupTests extends TestBase {
             }
         }
         //4. У контакта отсутвует группа test 0
+        //assert contactInitial != null;
         Assert.assertFalse(
                 contactInitial.getGroups().stream()
                 .anyMatch(groupData -> groupData.getName().equals("test 0")

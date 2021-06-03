@@ -3,37 +3,78 @@ package addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstname;
+    @Transient
     private String group;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
-    @Expose
+    @Transient
+    //@Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String email;
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobile;
+    @Transient
     private String allPhone;
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
+    @Transient
     private String emailCom;
+    @Transient
     private String emailRu;
+    @Transient
     private String AllEmail;
-    private File photo;
+    @Expose
+    @Column(name = "photo")
+    @Type(type = "text")
+    //@Transient
+    private String photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     public File getPhoto() {
-        return photo;
+        if (photo == null) {
+            return null;
+        } else {
+            return new File(photo);
+        }
+
+        //return new File(photo);
     }
 
     public ContactData withId(int id) {
@@ -43,6 +84,9 @@ public class ContactData {
     public ContactData withFirstname(String firstname) {
         this.firstname = firstname;
         return this;
+    }
+    public Groups getGroups() {
+        return new Groups(groups);
     }
     public ContactData withGroup(String group) {
         this.group = group;
@@ -89,7 +133,7 @@ public class ContactData {
         return this;
     }
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -135,5 +179,10 @@ public class ContactData {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstname, lastname);
+    }
+
+    public ContactData inGroups(GroupData group) {
+        groups.add(group);
+        return this;
     }
 }

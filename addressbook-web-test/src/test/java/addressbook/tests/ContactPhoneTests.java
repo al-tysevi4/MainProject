@@ -20,12 +20,6 @@ public class ContactPhoneTests extends TestBase {
                         .withFirstname("firstname %s")
                         .withGroup("group %s")
                         .withFirstname("lastname %s"));
-//        app.goTo().homePage();
-//        if (app.contact().list().size() == 0) {
-//            app.contact().create(new ContactData()
-//                    .withFirstname("alex")
-//                    .withGroup("test1")
-//                    .withFirstname("tysevich"));
 
         }
     }
