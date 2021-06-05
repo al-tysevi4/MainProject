@@ -247,12 +247,6 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.cssSelector("input[value='']")).click();
     }
 
-    public void addContactToGroupWithId(String grouopId) {
-        Select groupsDropdown = new Select(wd.findElement(By.name("to_group")));
-        groupsDropdown.selectByValue(grouopId);
-        addContactToGroup();
-    }
-
     private void addContactToGroup() {
         click(By.name("add"));
     }
@@ -263,6 +257,18 @@ public class ContactHelper extends HelperBase {
     }
 
     public void removeContactFromGroup() {
-        wd.findElement(By.cssSelector("input[value='']")).click();
+        wd.findElement(By.name("remove")).click();
+    }
+
+    public void addGroup(String groupName) {
+        Select groupsDropdown = new Select(wd.findElement(By.name("to_group")));
+        groupsDropdown.selectByVisibleText(groupName);
+        addContactToGroup();
+    }
+
+    public void filterByGroup(String groupName) {
+        Select groupsDropdown = new Select(wd.findElement(By.name("group")));
+        groupsDropdown.selectByVisibleText(groupName);
+
     }
 }
