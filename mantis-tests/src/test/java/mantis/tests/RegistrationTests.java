@@ -1,7 +1,7 @@
 package mantis.tests;
 
 import mantis.model.MailMessage;
-
+import java.util.Properties;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

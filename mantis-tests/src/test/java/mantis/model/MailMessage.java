@@ -1,5 +1,5 @@
 package mantis.model;
-
+import java.util.Properties;
 public class MailMessage {
     public String to;
     public String text;

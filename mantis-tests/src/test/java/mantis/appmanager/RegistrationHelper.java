@@ -10,8 +10,6 @@ public class RegistrationHelper extends HelperBase {
 
     public RegistrationHelper(ApplicationManager app) {
         super(app);
-        //this.app = app;
-        //wd = app.getDriver();
     }
 
     public void start(String username, String email) {
