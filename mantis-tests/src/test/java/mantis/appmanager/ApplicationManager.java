@@ -1,5 +1,7 @@
 package mantis.appmanager;
 
+import mantis.model.MailMessage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -9,6 +11,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -29,16 +32,6 @@ public class ApplicationManager {
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
-//        if (browser.equals(BrowserType.FIREFOX) ) {
-//            wd = new FirefoxDriver();
-//        } else if (browser.equals(BrowserType.CHROME)) {
-//            wd = new ChromeDriver();
-//        } else if (browser.equals(BrowserType.SAFARI)) {
-//            wd = new SafariDriver();
-//        }
-//        wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-//        wd.get(properties.getProperty("web.baseUrl"));
     }
 
     public void stop() {
@@ -87,5 +80,26 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public void goToManagement() {
+        wd.findElement(By.xpath("//li[6]/a/i")).click();
+    }
+
+    public void goToUsersManagement() {
+        wd.findElement(By.xpath("//a[contains(text(),'Управление пользователями')]")).click();
+    }
+
+    public void resetPassword() {
+        wd.findElement(By.cssSelector("input[value='Сбросить пароль']")).click();
+
+    }
+
+    public void takeUser() {
+        wd.findElement(By.xpath("//tr[2]/td/a")).click();
+    }
+
+    public void proceed() {
+        wd.findElement(By.xpath("//a[@href='login_page.php']"));
     }
 }
