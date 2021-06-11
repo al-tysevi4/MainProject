@@ -5,13 +5,13 @@ import addressbook.model.Contacts;
 import addressbook.model.GroupData;
 
 import addressbook.model.Groups;
-import addressbook.providers.TestDataProvider;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.hibernate.SessionFactory;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.stream.Collectors;
+import java.util.Iterator;
 
 public class ContactRemoveGroupTests extends TestBase {
 
@@ -21,77 +21,57 @@ public class ContactRemoveGroupTests extends TestBase {
     private int maxId;
     private GroupData testGroup;
 
-
+    private ContactData getContactWithGroup() {
+        for (Iterator<ContactData> iterator = app.db().contacts().iterator(); iterator.hasNext(); ) {
+            ContactData contact = iterator.next();
+            if (contact.getGroups().size() != 0) {
+                return contact;
+            }
+        }
+        return null;
+    }
 
     @BeforeMethod
     public void ensurePreconditions () {
-        //Если нет группы - создаем
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test 0"));
-            app.goTo().homePage();
+            app.goTo().returnToHomePage();
         }
-        //Если нет контакта - создаем
-        if (app.db().contacts().size() == 0) {
-            app.goTo().homePage();
-            app.contact().create(new ContactData().withFirstname("alexey")
-                    .withLastname("yagudin"));
-
-        }
-        //Считываем контакты из базы, запоминаем maxId
-        Contacts result = app.db().contacts();
-        for (ContactData contact : result) {
-            if (contact.getId() > maxId) {
-                maxId = contact.getId();
+        if (getContactWithGroup() == null) {
+            if (app.db().contacts().size() == 0) {
+                app.goTo().homePage();
+                app.contact().create(new ContactData().withFirstname("alexey")
+                        .withLastname("yagudin"));
+            } else {
+                app.goTo().returnToHomePage();
+                app.contact().checkContactById(app.db().contacts().iterator().next().getId());
+                app.contact().addContactToGroup();
             }
         }
     }
 
-        @Test (dataProvider = "groups.xml", dataProviderClass = TestDataProvider.class)
-        public  void testContactRemoveGroup(GroupData group) {
-            testGroup = group;
+        @Test
+        public  void testContactRemoveGroup() {
 
-            //Добавляем контакт с макс id в группу
+            ContactData changedContact = getContactWithGroup();
+            GroupData changedGroup = changedContact.getGroups().iterator().next();
+            int theId = changedContact.getId();
+
+            testGroup = changedGroup;
+
             app.goTo().homePage();
-            app.contact().checkContactById(maxId);
-            app.contact().addGroup(testGroup.getName());
-            app.goTo().returnToHomePage();
-
-            //Запоминаем состояние контакта с макс id до удаления группы
-            Contacts before = app.db().contacts();
-            ContactData contactWithGroup = null;
-            for (ContactData contact : before) {
-                if (contact.getId() == maxId) {
-                    contactWithGroup = contact;
-                }
-            }
-
-            //Удаляем контакт с макс id из группы
-            app.goTo().returnToHomePage();
             app.contact().filterByGroup(testGroup.getName());
-            app.contact().checkContactById(maxId);
-            app.contact().removeContactFromGroup();
+            app.contact().checkGroupForContact(changedGroup.getId());
+            app.contact().checkContactById(changedContact.getId());
+            app.contact().removeContactFromGroup(changedContact);
             app.goTo().returnToHomePage();
 
-            Contacts after = app.db().contacts();
-            ContactData contactWithoutGroup = null;
-            for (ContactData contact : after) {
-                if (contact.getId() == maxId) {
-                    contactWithoutGroup = contact;
-                }
-            }
+            Groups groupBefore = changedContact.ifGroups(changedGroup, false).getGroups();
+            Contacts getContactListAfter = app.db().contacts();
 
-            //У контакта изначально(before) группа была
-            Assert.assertFalse(
-                    contactWithGroup.getGroups().stream()
-                            .filter(groupData -> groupData.getName().equals(testGroup.getName()))
-                            .collect(Collectors.toList())
-                            .isEmpty()
-            );
-            Assert.assertFalse(
-                    contactWithoutGroup.getGroups().stream()
-                            .anyMatch(groupData -> groupData.getName().equals(testGroup.getName()))
-            );
+            Groups newGroupsList = getContactListAfter.stream().filter(c -> c.getId() == theId).findFirst().get().getGroups();
+            MatcherAssert.assertThat(groupBefore, CoreMatchers.equalTo(newGroupsList));
         }
 }
 

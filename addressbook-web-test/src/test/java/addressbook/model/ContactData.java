@@ -185,4 +185,13 @@ public class ContactData {
         groups.add(group);
         return this;
     }
+    public ContactData ifGroups (GroupData group, boolean toAdd) {
+        if (toAdd) {
+            groups.add(group);
+        }
+        else {
+            groups.remove(group);
+        }
+        return this;
+    }
 }
