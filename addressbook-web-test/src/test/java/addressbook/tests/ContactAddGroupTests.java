@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import java.util.Iterator;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class ContactAddGroupTests extends TestBase {
     private ContactData changedContact;

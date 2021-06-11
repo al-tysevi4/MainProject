@@ -16,9 +16,9 @@ import java.util.Iterator;
 public class ContactRemoveGroupTests extends TestBase {
 
     private static SessionFactory sessionFactory;
-    private int contactId;
-    private int groupId;
-    private int maxId;
+//    private int contactId;
+//    private int groupId;
+//    private int maxId;
     private GroupData testGroup;
 
     private ContactData getContactWithGroup() {
