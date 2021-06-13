@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 public class RegistrationHelper extends HelperBase {
 
     //private final ApplicationManager app;
-    //private WebDriver wd;
+
 
     public RegistrationHelper(ApplicationManager app) {
         super(app);

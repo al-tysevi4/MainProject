@@ -91,15 +91,15 @@ public class ApplicationManager {
     }
 
     public void resetPassword() {
-        wd.findElement(By.cssSelector("input[value='Сбросить пароль']")).click();
+        wd.findElement(By.xpath("//input[@value='Сбросить пароль']")).click();
 
     }
 
-    public void takeUser() {
-        wd.findElement(By.xpath("//tr[2]/td/a")).click();
+    public void takeUser(String user) {
+        wd.findElement(By.xpath("//a[text()='" + user + "']")).click();
     }
 
     public void proceed() {
-        wd.findElement(By.xpath("//a[@href='login_page.php']"));
+        wd.findElement(By.xpath("//a[contains(text(), 'Продолжить')]")).click();
     }
 }
