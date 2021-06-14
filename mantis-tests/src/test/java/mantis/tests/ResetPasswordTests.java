@@ -48,7 +48,7 @@ public class ResetPasswordTests extends TestBase {
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password);
 
-        app.registration().finish(confirmationLink, password);
+        //app.registration().finish(confirmationLink, password);
     }
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
         MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findAny().get();
