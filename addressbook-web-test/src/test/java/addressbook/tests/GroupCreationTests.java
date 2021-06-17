@@ -2,6 +2,7 @@ package addressbook.tests;
 
 import addressbook.model.GroupData;
 import addressbook.model.Groups;
+import addressbook.providers.TestDataProvider;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
@@ -55,7 +56,8 @@ Logger logger = LoggerFactory.getLogger(GroupCreationTests.class);
   }
 
 
-  @Test (dataProvider = "validGroupsFromXml")
+  //@Test (dataProvider = "validGroupsFromXml")
+  @Test (dataProvider = "groups.xml", dataProviderClass = TestDataProvider.class)
   public void testGroupCreation(GroupData group) throws Exception {
     app.goTo().groupPage();
     Groups before = app.db().groups();
